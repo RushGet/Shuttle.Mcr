@@ -1,0 +1,13 @@
+version: 0.1
+selectors:
+  - name: "mcr dotnet sdk"
+    type: "mcr"
+    image: "dotnet/sdk"
+    tag_regex:
+      - "^7\\.*"
+      - "^6\\.*"
+      - "^5\\.*"
+      - "^3\\.*"
+    tag_regex_exclude:
+      - ".*preview.*"
+      - ".*rc.*"
