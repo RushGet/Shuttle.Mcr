@@ -2,16 +2,18 @@ import unittest
 
 from tasks import *
 
+test_config_file = "config/config_test.yaml"
+
 
 class MyTestCase(unittest.TestCase):
     def test_load_config(self):
-        config = load_config()
+        config = load_config(test_config_file)
         self.assertIsNotNone(config)
         self.assertEqual(config.version, 0.1)
         print(config)
 
     def test_filter_by_tag_selectors(self):
-        config = load_config()
+        config = load_config(test_config_file)
         with open('test_data/dotnet_sdk_tags.json', "r", encoding='utf-8') as f:
             mcr_tags_json = json.load(f)
         result = select_mcr_tags(config.images[0], mcr_tags_json['tags'])
@@ -23,7 +25,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(result[0].tags, match_data)
 
     def test_filter_by_tag_selectors_redis(self):
-        config = load_config()
+        config = load_config(test_config_file)
         with open('test_data/redis_dockerhub_tags.json', "r", encoding='utf-8') as f:
             mcr_tags_json = json.load(f)
         result = select_mcr_tags(config.images[1], mcr_tags_json['tags'])

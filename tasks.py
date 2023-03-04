@@ -41,10 +41,9 @@ def get_all_tags(registry: DockerRegistry, image: str):
             return r.json()['tags']
 
 
-def load_config() -> ShuttleConfig:
+def load_config(file: str = "config/config.yaml") -> ShuttleConfig:
     # Load config from file
-    path = "config/config.yaml"
-    with open(path, "r") as f:
+    with open(file, "r") as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
     return ShuttleConfig.from_yaml(config)
 
@@ -150,9 +149,12 @@ def create_data(c):
                 json.dump(item.items, f, indent=4)
             image_sync_files.append(f"data/{item.name}.json")
 
-    # dump json, string should be like '["data/xxx.json", "data/yyy.json"]'
+    if len(image_sync_files) == 0:
+        logging.info("No images to sync")
+        return
+
+    # dump json, string should be like "['data/xxx.json', 'data/yyy.json']"
     json_content = json.dumps(image_sync_files).replace("\"", "'")
-    # json_content = f"\\\"{json_content}"
     logging.info(f"image_sync_files={json_content}")
     # print output to GitHub action
     c.run(f'echo "image_sync_files={json_content}" >> $GITHUB_OUTPUT');
