@@ -151,7 +151,8 @@ def create_data(c):
             image_sync_files.append(f"data/{item.name}.json")
 
     # print output to GitHub action
-    c.run(f'echo "image_sync_files={json.dumps(image_sync_files)}" >> $GITHUB_OUTPUT');
+    json_content = f"'{json.dumps(image_sync_files)}'"
+    c.run(f'echo "image_sync_files={json_content}" >> $GITHUB_OUTPUT');
 
 
 @task
