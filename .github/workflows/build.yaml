@@ -1,4 +1,4 @@
-name: sync images
+name: Build and test
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  prepare_data:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -24,4 +24,4 @@ jobs:
           pipenv install
       - name: test
         run: |
-          python -m unittest discover
+          pipenv run python -m unittest discover

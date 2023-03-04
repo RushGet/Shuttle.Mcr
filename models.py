@@ -56,7 +56,7 @@ class ShuttleConfig:
     @staticmethod
     def from_yaml(yaml):
         images = []
-        if 'images' in yaml:
+        if 'images' in yaml and len(yaml['images']) > 0:
             for image in yaml['images']:
                 images.append(
                     ShuttleImageConfig(image['name'], image['docker_registry'], image['image'], image['target'],
