@@ -36,4 +36,4 @@ jobs:
       - name: sync
         id: sync
         run: |
-          pipenv run inv create-data ${{ matrix.image_sync_files }}
+          pipenv run inv create-data --image_sync_file '${{ matrix.image_sync_files }}'
