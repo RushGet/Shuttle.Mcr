@@ -97,24 +97,6 @@ def create_image_sync_data_json(items: list[ImageTransportation]) -> list[ImageS
     return data
 
 
-def create_image_sync_data_mcr(config: ShuttleConfig, images: list[str]) -> list[ImageSyncData]:
-    for source_image in images:
-        url = f"https://mcr.microsoft.com/v2/{source_image}/tags/list"
-        r = requests.get(url)
-        if r.status_code == 200:
-            match_results = select_mcr_tags(config, r.json())
-            # map match_results to ImageTransportation
-            items = []
-            for match_result in match_results:
-                for tag in match_result.tags:
-                    items.append(
-                        ImageTransportation(source_image, DockerRegistry.MCR.value, match_result.match_config.target,
-                                            tag))
-
-            # create json for image-syncer
-            data = create_image_sync_data_json(items)
-
-
 @task
 def create_data(c):
     # force reset data dir
