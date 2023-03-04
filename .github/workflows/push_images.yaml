@@ -27,9 +27,10 @@ jobs:
           name: data
           path: data
       - name: setup python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+          cache: 'pipenv'
       - name: pip install
         run: |
           pip install pipenv

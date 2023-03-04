@@ -25,9 +25,10 @@ jobs:
           sed -i "s#ALIYUN_USERNAME#${ALIYUN_USERNAME}#g" auth.json
           sed -i "s#ALIYUN_TOKEN#${{ secrets.ALIYUN_TOKEN }}#g" auth.json
       - name: setup python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+          cache: 'pipenv'
       - name: pip install
         run: |
           pip install pipenv

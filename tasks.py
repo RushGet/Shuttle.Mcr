@@ -150,8 +150,8 @@ def create_data(c):
                 json.dump(item.items, f, indent=4)
             image_sync_files.append(f"data/{item.name}.json")
 
-    # print output to github action
-    print(f"::set-output name=image_sync_files::{json.dumps(image_sync_files)}")
+    # print output to GitHub action
+    c.run(f'echo "image_sync_files={json.dumps(image_sync_files)}" >> $GITHUB_OUTPUT');
 
 
 @task
