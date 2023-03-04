@@ -151,6 +151,7 @@ def create_data(c):
 @task(pre=[create_data])
 def sync(c):
     # sync images
+    os.chmod("image-syncer", 0o755)
     for file in os.listdir("data"):
         if file.endswith(".json"):
             c.run(f"./image-syncer --auth=./auth.json --images=./data/{file}")
