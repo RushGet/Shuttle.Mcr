@@ -7,8 +7,6 @@ name = "pypi"
 invoke = "*"
 pyyaml = "*"
 requests = "*"
-
-[dev-packages]
 attrs = "22.2.0"
 coverage = "7.2.1"
 iniconfig = "2.0.0"
@@ -20,6 +18,8 @@ pytest = "7.2.1"
 pytest-cov = "4.0.0"
 tomli = "2.0.1"
 pipenv = "2023.2.18"
+
+[dev-packages]
 
 [requires]
 python_version = "3.11"
