@@ -20,10 +20,10 @@ jobs:
           cache: 'pipenv'
       - name: pip install
         run: |
-          pip install -r requirements.txt
+          pip install pipenv
           pipenv install
       - name: Run tests and collect coverage
         run: |
-          pytest --cov
+          pipenv run pytest --cov
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
