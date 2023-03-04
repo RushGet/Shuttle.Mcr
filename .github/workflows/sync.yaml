@@ -33,4 +33,4 @@ jobs:
           pip install pipenv
       - name: pull and sync
         run: |
-          pipenv run sync
+          pipenv run inv sync
