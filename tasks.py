@@ -151,7 +151,7 @@ def create_data(c):
             image_sync_files.append(f"data/{item.name}.json")
 
     # dump json, string should be like '["data/xxx.json", "data/yyy.json"]'
-    json_content = json.dumps(image_sync_files).replace("\"", '\'')
+    json_content = json.dumps(image_sync_files)
     json_content = f"\"{json_content}\""
     logging.info(f"image_sync_files={json_content}")
     # print output to GitHub action
