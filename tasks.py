@@ -152,7 +152,7 @@ def create_data(c):
 
     # dump json, string should be like '["data/xxx.json", "data/yyy.json"]'
     json_content = json.dumps(image_sync_files).replace("\"", "'")
-    json_content = f"\\\"{json_content}\\\""
+    # json_content = f"\\\"{json_content}"
     logging.info(f"image_sync_files={json_content}")
     # print output to GitHub action
     c.run(f'echo "image_sync_files={json_content}" >> $GITHUB_OUTPUT');
