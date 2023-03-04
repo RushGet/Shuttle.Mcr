@@ -48,6 +48,8 @@ jobs:
       image_sync_files: ${{ steps.create-data.outputs.image_sync_files }}
   push:
     uses: ./.github/workflows/push_images.yaml
+    # run when image_sync_files is not empty
+    if: ${{ needs.prepare_data.outputs.image_sync_files != '[]' }}
     needs:
       - prepare_data
     with:

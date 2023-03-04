@@ -109,6 +109,7 @@ def create_data(c):
     config = load_config()
     if len(config.images) == 0:
         logging.info("No image config found")
+        c.run(f'echo "image_sync_files=[]" >> $GITHUB_OUTPUT');
         return
 
     image_sync_files = []
@@ -137,6 +138,7 @@ def create_data(c):
 
     if len(image_sync_files) == 0:
         logging.info("No images to sync")
+        c.run(f'echo "image_sync_files=[]" >> $GITHUB_OUTPUT');
         return
 
     # dump json, string should be like "['data/xxx.json', 'data/yyy.json']"
