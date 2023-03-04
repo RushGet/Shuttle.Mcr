@@ -3,6 +3,7 @@ import logging
 import os
 import re
 import shutil
+import sys
 
 import requests
 import yaml
@@ -12,7 +13,8 @@ from models import *
 
 logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
 rootLogger = logging.getLogger()
-consoleHandler = logging.StreamHandler()
+rootLogger.setLevel(logging.INFO)
+consoleHandler = logging.StreamHandler(sys.stdout)
 consoleHandler.setFormatter(logFormatter)
 rootLogger.addHandler(consoleHandler)
 
@@ -152,10 +154,13 @@ def create_data(c):
     print(f"::set-output name=image_sync_files::{json.dumps(image_sync_files)}")
 
 
+@task
 def sync(c, image_sync_file: str = ""):
     # sync images
+    logging.info("Syncing images")
     os.chmod("image-syncer", 0o755)
     if image_sync_file != "":
+        logging.info(f"Syncing {image_sync_file}")
         c.run(f"./image-syncer --auth=./auth.json --images={image_sync_file}")
     else:
         for file in os.listdir("data"):

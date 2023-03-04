@@ -11,6 +11,7 @@ jobs:
   image_sync:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         image_sync_files: ${{ fromJson(inputs.image_sync_files) }}
     steps:
@@ -36,4 +37,4 @@ jobs:
       - name: sync
         id: sync
         run: |
-          pipenv run inv create-data --image-sync-file '${{ matrix.image_sync_files }}'
+          pipenv run inv sync --image-sync-file '${{ matrix.image_sync_files }}'
