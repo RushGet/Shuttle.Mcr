@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - publish
-      - feature/mcr
+  schedule:
+    # every two weeks
+    - cron: '0 0 */14 * *'
 
 env:
   DOCKERHUB_USERNAME: newbe36524

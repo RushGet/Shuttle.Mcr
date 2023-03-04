@@ -125,6 +125,10 @@ def create_data(c):
     logging.debug("data dir created")
 
     config = load_config()
+    if len(config.images) == 0:
+        logging.info("No image config found")
+        return
+
     image_sync_files = []
     for image_config in config.images:
         logging.info(f"Processing {image_config.image}")

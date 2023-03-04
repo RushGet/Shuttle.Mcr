@@ -1,0 +1,28 @@
+name: sync images
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  prepare_data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pipenv'
+      - name: pip install
+        run: |
+          pip install pipenv
+          pipenv install
+      - name: test
+        id:
+        run: |
+          python -m unittest discover
