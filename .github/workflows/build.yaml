@@ -23,6 +23,5 @@ jobs:
           pip install pipenv
           pipenv install
       - name: test
-        id:
         run: |
           python -m unittest discover

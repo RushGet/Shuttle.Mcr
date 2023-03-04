@@ -56,10 +56,11 @@ class ShuttleConfig:
     @staticmethod
     def from_yaml(yaml):
         images = []
-        for image in yaml['images']:
-            images.append(
-                ShuttleImageConfig(image['name'], image['docker_registry'], image['image'], image['target'],
-                                   image['tag_regex'], image.get('tag_regex_exclude', None)))
+        if 'images' in yaml:
+            for image in yaml['images']:
+                images.append(
+                    ShuttleImageConfig(image['name'], image['docker_registry'], image['image'], image['target'],
+                                       image['tag_regex'], image.get('tag_regex_exclude', None)))
         return ShuttleConfig(yaml['version'], images)
 
 
