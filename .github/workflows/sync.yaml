@@ -14,7 +14,7 @@ env:
   TENCENTYUN_USERNAME: 472158246
   TENCENTYUN_NAMESPACE: mcr_newbe36524
 jobs:
-  build:
+  prepare_data:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -33,5 +33,19 @@ jobs:
           pip install pipenv
           pipenv install
       - name: pull and sync
+        id: create-data
         run: |
-          pipenv run inv sync
+          pipenv run inv create-data
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: "data"
+          path: data
+    outputs:
+      image_sync_files: ${{ steps.create-data.outputs.image_sync_files }}
+  push:
+    uses: ./.github/workflows/push_images.yaml
+    needs:
+      - prepare_data
+    with:
+      image_sync_files: ${{ needs.prepare_data.outputs.image_sync_files }}

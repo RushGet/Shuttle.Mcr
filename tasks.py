@@ -2,12 +2,11 @@ import json
 import logging
 import os
 import re
-from enum import Enum
+import shutil
 
 import requests
 import yaml
 from invoke import task
-import shutil
 
 from models import *
 
@@ -125,6 +124,7 @@ def create_data(c):
     logging.debug("data dir created")
 
     config = load_config()
+    image_sync_files = []
     for image_config in config.images:
         logging.info(f"Processing {image_config.image}")
         tags = get_all_tags(image_config.docker_registry, image_config.image)
@@ -146,12 +146,18 @@ def create_data(c):
             logging.info(f"Writing {item.name}.json")
             with open(f"data/{item.name}.json", "w") as f:
                 json.dump(item.items, f, indent=4)
+            image_sync_files.append(f"data/{item.name}.json")
+
+    # print output to github action
+    print(f"::set-output name=image_sync_files::{json.dumps(image_sync_files)}")
 
 
-@task(pre=[create_data])
-def sync(c):
+def sync(c, image_sync_file: str = ""):
     # sync images
     os.chmod("image-syncer", 0o755)
-    for file in os.listdir("data"):
-        if file.endswith(".json"):
-            c.run(f"./image-syncer --auth=./auth.json --images=./data/{file}")
+    if image_sync_file != "":
+        c.run(f"./image-syncer --auth=./auth.json --images={image_sync_file}")
+    else:
+        for file in os.listdir("data"):
+            if file.endswith(".json"):
+                c.run(f"./image-syncer --auth=./auth.json --images=./data/{file}")
