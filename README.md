@@ -1,1 +1,3 @@
-# Shuttle.Mcr
+# Shuttle
+
+see <https://rg.newbe.pro>
